@@ -1,24 +1,25 @@
 # Text Recognition For Accessibility
 
-The goal of our project is to promote accessibility for people with visual impairments by identifying text from a picture and reading it out. This project
+The **goal** of our project is to promote accessibility for people with visual impairments by identifying text from a picture and reading it out. This project
 is important because improving accessibility provides equal access to people with disabilities. This ensures that all people can perceive, understand,
 and navigate the world equally and with assistive technology when needed.
 
-The dataset we will be using is the Kaggle Text Extraction from Images Dataset. The dataset and more details can be found at: https://www.kaggle.com/datasets/robikscube/textocr-text-extraction-from-images-dataset?resource=download
+The **dataset** we will be using is the **Kaggle Text Extraction from Images Dataset**. The dataset and more details can be found at: https://www.kaggle.com/datasets/robikscube/textocr-text-extraction-from-images-dataset?resource=download
 
-Our proposed method for building a product is using a Neural Network to identify text from images using Natural Language Processing.
+Our **proposed method** for building a product is using a Neural Network to identify text from images using Natural Language Processing.
+ 
 
+ 
 ## Dataset
 
-TextOCR requires models to perform text-recognition on arbitrary shaped scene-text present on natural images. TextOCR provides ~1M high quality
-word annotations on TextVQA images allowing application of end-to-end reasoning on downstream tasks such as visual question answering or image
-captioning.
+TextOCR requires models to perform text-recognition on arbitrary shaped scene-text present on natural images. 
+This OCR provides ~1M high quality word annotations on TextVQA images allowing application of end-to-end reasoning on downstream tasks such as visual question answering or image captioning.
 
-This data is available with a CC0: Public Domain license. 
-
+This data is available with a *CC0: Public Domain license*. 
 
 
-## Plotting Test Images
+
+## Plotting Example Images
 
 ```
 # Plotting example images
@@ -35,9 +36,26 @@ axs[i].set_title(f'{image_id} - {n_annot}')
 plt.show()
 ```
 
-<img width="509" alt="Screen Shot 2023-04-25 at 4 02 38 PM" src="https://user-images.githubusercontent.com/51467244/235227359-653ba86a-952e-481b-858a-a1aa5db9f6d7.png">
+<img width="650" alt="Screen Shot 2023-04-25 at 4 02 38 PM" src="https://user-images.githubusercontent.com/51467244/235227359-653ba86a-952e-481b-858a-a1aa5db9f6d7.png">
+
 
 ## Extracting Text from Images using Keras OCR
+
+keras-ocr is an OCR library built on top of the popular deep learning framework, Keras. 
+It utilizes the CRAFT: Character-Region Awareness For Text detection algorithm with a VGG model as the backbone.  
+- It uses multiple machine algorithms for pattern recognition to determine the layout and presence of text image files
+- It is trained to recognize characters, shapes, and numbers in order to recognize text in images 
+- This is done using a combination of hardware, such as optical scanners and software capable of image processing
+- It is trained on re-purposed data from scanned documents, camera images, and image-only pdfs
+
+<img width="500" alt="Screen Shot 2023-04-28 at 2 06 17 PM" src="https://user-images.githubusercontent.com/51467244/235232311-6bdf6d2e-2870-4de7-98f6-f9757eaa7703.png">
+
+*VGG illustration - U Toronto's Prof Davi Frossard*
+
+Sources:
+- https://pypi.org/project/keras-ocr/
+- https://wandb.ai/andrea0/optical-char/reports/Optical-Character-Recognition-Then-and-Now--VmlldzoyMDY0Mzc0
+
 
 ```
 import keras_ocr
@@ -51,7 +69,7 @@ ax.set_title('Keras OCR Result Example')
 plt.show()
 
 ```
-<img width="392" alt="Screen Shot 2023-04-28 at 1 40 05 PM" src="https://user-images.githubusercontent.com/51467244/235227638-1623994a-f0af-4a7d-a64f-7204f9d2be59.png">
+<img width="350" alt="Screen Shot 2023-04-28 at 1 40 05 PM" src="https://user-images.githubusercontent.com/51467244/235227638-1623994a-f0af-4a7d-a64f-7204f9d2be59.png">
 
 ```
 results = pipeline.recognize([img_fns[1]])
@@ -84,20 +102,24 @@ plt.show()
 for img_fn in img_fns[:25]:
 plot_compare(img_fn, kerasocr_df)
 ```
+<img width="500" alt="Screen Shot 2023-04-28 at 1 43 52 PM" src="https://user-images.githubusercontent.com/51467244/235228287-fbb6dccd-f1e0-42e3-9873-ddd804028902.png">
 
-<img width="299" alt="Screen Shot 2023-04-25 at 4 29 20 PM" src="https://user-images.githubusercontent.com/51467244/235227852-025e3cf1-774f-43a8-8ff7-23fbeb83089c.png">
-<img width="283" alt="Screen Shot 2023-04-25 at 4 29 14 PM" src="https://user-images.githubusercontent.com/51467244/235227864-9a412ac0-1fd3-4eef-bb8b-dd5f1f4133ee.png">
+<img width="300" alt="Screen Shot 2023-04-25 at 4 29 20 PM" src="https://user-images.githubusercontent.com/51467244/235227852-025e3cf1-774f-43a8-8ff7-23fbeb83089c.png"> <img width="300" alt="Screen Shot 2023-04-25 at 4 29 14 PM" src="https://user-images.githubusercontent.com/51467244/235227864-9a412ac0-1fd3-4eef-bb8b-dd5f1f4133ee.png">
 
-<img width="808" alt="Screen Shot 2023-04-28 at 1 43 52 PM" src="https://user-images.githubusercontent.com/51467244/235228287-fbb6dccd-f1e0-42e3-9873-ddd804028902.png">
+
 
 
 ## Generating Metrics - How well does our model perform?
 
 Initially planned to use accuracy to determine model performance, but opted to use Word Error Rate (WER) and Character Error Rate (CER) instead. This is a better objective metric because it integrates potential substitution, deletion, and insertion errors. This offers us a benchmark to iterate our model to steadily improve performance metrics. 
 
-<img width="817" alt="Screen Shot 2023-04-28 at 1 44 09 PM" src="https://user-images.githubusercontent.com/51467244/235228360-afb00687-6a3f-4fad-8a19-aeae00b29df1.png">
+```
+#Adding Code Here
+```
 
-<img width="473" alt="Screen Shot 2023-04-28 at 1 45 14 PM" src="https://user-images.githubusercontent.com/51467244/235228552-936cf6a9-2368-4d06-9c8a-82359bec4207.png">
+<img width="500" alt="Screen Shot 2023-04-28 at 1 44 09 PM" src="https://user-images.githubusercontent.com/51467244/235228360-afb00687-6a3f-4fad-8a19-aeae00b29df1.png">
+
+Source: https://towardsdatascience.com/evaluating-ocr-output-quality-with-character-error-rate-cer-and-word-error-rate-wer-853175297510
 
 
 ## Reflections & Next Steps
