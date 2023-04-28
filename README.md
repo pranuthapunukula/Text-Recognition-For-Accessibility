@@ -17,7 +17,20 @@ This OCR provides ~1M high quality word annotations on TextVQA images allowing a
 
 This data is available with a *CC0: Public Domain license*. 
 
+```
+# Importing Libraries
 
+import pandas as pd
+import numpy as np
+
+from glob import glob
+from tqdm.notebook import tqdm
+
+import matplotlib.pyplot as plt
+from PIL import Image
+
+plt.style.use('ggplot')
+```
 
 ## Plotting Example Images
 
@@ -27,22 +40,34 @@ This data is available with a *CC0: Public Domain license*.
 img_fns = glob.glob('../Final_Project/train_val_images/train_images/*')
 fig, axs = plt.subplots(5, 5, figsize=(20, 20))
 axs = axs.flatten()
+
+# Displaying the first 25 images
+
 for i in range(25):
-axs[i].imshow(plt.imread(img_fns[i]))
-axs[i].axis('off')
-image_id = img_fns[i].split('/')[-1].rstrip('.jpg')
-n_annot = len(annot_df.query('image_id == @image_id'))
-axs[i].set_title(f'{image_id} - {n_annot}')
+ axs[i].imshow(plt.imread(img_fns[i]))
+ axs[i].axis('off')
+ image_id = img_fns[i].split('/')[-1].rstrip('.jpg')
+ n_annot = len(annot_df.query('image_id == @image_id'))
+ axs[i].set_title(f'{image_id} - {n_annot}')
+ 
 plt.show()
 ```
 
-<img width="650" alt="Screen Shot 2023-04-25 at 4 02 38 PM" src="https://user-images.githubusercontent.com/51467244/235227359-653ba86a-952e-481b-858a-a1aa5db9f6d7.png">
+<img width="600" alt="Screen Shot 2023-04-25 at 4 02 38 PM" src="https://user-images.githubusercontent.com/51467244/235227359-653ba86a-952e-481b-858a-a1aa5db9f6d7.png"> 
+
+```
+image_id = img_fns[0].split('/')[-1].split('.')[0]
+annot.query('image_id == @image_id')
+```
+
+<img width="600" alt="Screen Shot 2023-04-28 at 2 14 26 PM" src="https://user-images.githubusercontent.com/51467244/235233716-d04d8756-d4e7-4a4b-823f-49a403003e52.png">
+
 
 
 ## Extracting Text from Images using Keras OCR
 
-keras-ocr is an OCR library built on top of the popular deep learning framework, Keras. 
-It utilizes the CRAFT: Character-Region Awareness For Text detection algorithm with a VGG model as the backbone.  
+**Keras-ocr** is an OCR library built on top of the popular deep learning framework, Keras. 
+It utilizes the **CRAFT: Character-Region Awareness For Text detection algorithm** with a **VGG model** as the backbone.  
 - It uses multiple machine algorithms for pattern recognition to determine the layout and presence of text image files
 - It is trained to recognize characters, shapes, and numbers in order to recognize text in images 
 - This is done using a combination of hardware, such as optical scanners and software capable of image processing
@@ -58,26 +83,40 @@ Sources:
 
 
 ```
+# Installing Keras OCR (supports Python >= 3.6 and TensorFlow >= 2.0.0)
+
 import keras_ocr
+
+# Setting up a pipeline with Keras-ocr (the model is a pre-trained text extraction model loaded with pre-trained weights for the detector and recognizer)
+# Plotting annotations for the first image
+
 pipeline = keras_ocr.pipeline.Pipeline()
 results = pipeline.recognize([img_fns[1]])
 keras_ocr.tools.drawAnnotations(plt.imread(img_fns[1]), results[0])
+
 pd.DataFrame(results[0], columns=['text', 'bbox'])
 fig, ax = plt.subplots(figsize=(10, 10))
 keras_ocr.tools.drawAnnotations(plt.imread(img_fns[1]), results[0], ax=ax)
 ax.set_title('Keras OCR Result Example')
+
 plt.show()
 
 ```
-<img width="350" alt="Screen Shot 2023-04-28 at 1 40 05 PM" src="https://user-images.githubusercontent.com/51467244/235227638-1623994a-f0af-4a7d-a64f-7204f9d2be59.png">
+<img width="600" alt="Screen Shot 2023-04-28 at 1 40 05 PM" src="https://user-images.githubusercontent.com/51467244/235227638-1623994a-f0af-4a7d-a64f-7204f9d2be59.png">
 
 ```
+
+# Setting up a pipeline with Keras-ocr (the model is a pre-trained text extraction model loaded with pre-trained weights for the detector and recognizer)
+# Plotting annotations for all images
+
 results = pipeline.recognize([img_fns[1]])
 pd.DataFrame(results[0], columns=['text', 'bbox'])
 fig, ax = plt.subplots(figsize=(10, 10))
 keras_ocr.tools.drawAnnotations(plt.imread(img_fns[1]), results[0], ax=ax)
 ax.set_title('Keras OCR Result Example')
 plt.show()
+
+# Running the pipeline recognizer on the first 25 images and making predictions about the text in these images
 
 pipeline = keras_ocr.pipeline.Pipeline()
 dfs = []
@@ -90,6 +129,8 @@ img_df['img_id'] = img_id
 dfs.append(img_df)
 kerasocr_df = pd.concat(dfs)
 
+# This ended up being unecessary since we weren't comparing OCR's, but plotting comparisons
+
 def plot_compare(img_fn, kerasocr_df):
 img_id = img_fn.split('/')[-1].split('.')[0]
 fig, axs = plt.subplots(1, 2, figsize=(15, 10))
@@ -101,8 +142,15 @@ axs[1].set_title('keras_ocr results', fontsize=24)
 plt.show()
 for img_fn in img_fns[:25]:
 plot_compare(img_fn, kerasocr_df)
+
+# Printing the identified text from the images
+
+predicted_image = prediction_groups[1]
+for text, box in predicted_image:
+    print(text)
+    
 ```
-<img width="500" alt="Screen Shot 2023-04-28 at 1 43 52 PM" src="https://user-images.githubusercontent.com/51467244/235228287-fbb6dccd-f1e0-42e3-9873-ddd804028902.png">
+<img width="600" alt="Screen Shot 2023-04-28 at 1 43 52 PM" src="https://user-images.githubusercontent.com/51467244/235228287-fbb6dccd-f1e0-42e3-9873-ddd804028902.png">
 
 <img width="300" alt="Screen Shot 2023-04-25 at 4 29 20 PM" src="https://user-images.githubusercontent.com/51467244/235227852-025e3cf1-774f-43a8-8ff7-23fbeb83089c.png"> <img width="300" alt="Screen Shot 2023-04-25 at 4 29 14 PM" src="https://user-images.githubusercontent.com/51467244/235227864-9a412ac0-1fd3-4eef-bb8b-dd5f1f4133ee.png">
 
@@ -115,9 +163,11 @@ Initially planned to use accuracy to determine model performance, but opted to u
 
 ```
 #Adding Code Here
+
+
 ```
 
-<img width="500" alt="Screen Shot 2023-04-28 at 1 44 09 PM" src="https://user-images.githubusercontent.com/51467244/235228360-afb00687-6a3f-4fad-8a19-aeae00b29df1.png">
+<img width="600" alt="Screen Shot 2023-04-28 at 1 44 09 PM" src="https://user-images.githubusercontent.com/51467244/235228360-afb00687-6a3f-4fad-8a19-aeae00b29df1.png">
 
 Source: https://towardsdatascience.com/evaluating-ocr-output-quality-with-character-error-rate-cer-and-word-error-rate-wer-853175297510
 
