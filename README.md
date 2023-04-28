@@ -87,12 +87,13 @@ plot_compare(img_fn, kerasocr_df)
 
 <img width="299" alt="Screen Shot 2023-04-25 at 4 29 20 PM" src="https://user-images.githubusercontent.com/51467244/235227852-025e3cf1-774f-43a8-8ff7-23fbeb83089c.png">
 <img width="283" alt="Screen Shot 2023-04-25 at 4 29 14 PM" src="https://user-images.githubusercontent.com/51467244/235227864-9a412ac0-1fd3-4eef-bb8b-dd5f1f4133ee.png">
-<img width="709" alt="Screen Shot 2023-04-25 at 4 30 15 PM" src="https://user-images.githubusercontent.com/51467244/235227875-4b7712aa-21b8-445c-a232-f2027a99383f.png">
 
 <img width="808" alt="Screen Shot 2023-04-28 at 1 43 52 PM" src="https://user-images.githubusercontent.com/51467244/235228287-fbb6dccd-f1e0-42e3-9873-ddd804028902.png">
 
 
-## Generating Metrics
+## Generating Metrics - How well does our model perform?
+
+Initially planned to use accuracy to determine model performance, but opted to use Word Error Rate (WER) and Character Error Rate (CER) instead. This is a better objective metric because it integrates potential substitution, deletion, and insertion errors. This offers us a benchmark to iterate our model to steadily improve performance metrics. 
 
 <img width="817" alt="Screen Shot 2023-04-28 at 1 44 09 PM" src="https://user-images.githubusercontent.com/51467244/235228360-afb00687-6a3f-4fad-8a19-aeae00b29df1.png">
 
