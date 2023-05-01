@@ -162,8 +162,34 @@ for text, box in predicted_image:
 Initially planned to use accuracy to determine model performance, but opted to use Word Error Rate (WER) and Character Error Rate (CER) instead. This is a better objective metric because it integrates potential substitution, deletion, and insertion errors. This offers us a benchmark to iterate our model to steadily improve performance metrics. 
 
 ```
-#Adding Code Here
+# Importing jiwer 
 
+from jiwer import wer
+from jiwer import cer
+
+actual = "scouts together again!"
+predicted = "scouts tocther againt"
+
+error_wer=0
+error_cer=0
+
+dfs = []
+
+
+def compare(img_fn, kerasocr_df):
+    img_id = img_fn.split('/')[-1].split('.')[0]
+    fig, axs = plt.subplots(1, 2, figsize=(15, 10))
+    keras_results = kerasocr_df.query('img_id == @img_id')[['text','bbox']].values.tolist()
+    keras_results = [(x[0], np.array(x[1])) for x in keras_results]
+
+
+for img_fn in img_fns[:25]:
+    error_wer= error_wer + wer(img_fn, kerasocr_df)
+    error_cer= error_cer + cer(img_fn, kerasocr_df)
+    
+
+print(error_wer/25)
+print(error_cer/25)
 
 ```
 
