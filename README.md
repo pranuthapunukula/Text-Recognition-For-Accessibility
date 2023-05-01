@@ -1,21 +1,31 @@
 # Text Recognition For Accessibility
 
-The **goal** of our project is to promote accessibility for people with visual impairments by identifying text from a picture and reading it out. This project
-is important because improving accessibility provides equal access to people with disabilities. This ensures that all people can perceive, understand,
-and navigate the world equally and with assistive technology when needed.
+## Introduction
 
-The **dataset** we will be using is the **Kaggle Text Extraction from Images Dataset**. The dataset and more details can be found at: https://www.kaggle.com/datasets/robikscube/textocr-text-extraction-from-images-dataset?resource=download
+**Background**
 
-Our **proposed method** for building a product is using a Neural Network to identify text from images using Natural Language Processing.
- 
+The goal of our project is to promote accessibility for people with visual impairments by identifying text from a picture and displaying this text in the form of an indicator. The model will point out significant text in the picture and display the text in a way that is easily identifiable and can be recognized using a voice to text system. Given that the world is becoming increasingly digital, it is important to implement systems that can extract text from images in an efficient manner given that images are becoming a key signifier for identification and health related issues. This project is important because improving accessibility provides equal access to people with visual disabilities. The potential that text extraction from images has for the safety of those with visual impairments proves the importance of this project, and can be used in a number of ways. Some uses can include identifying one's surroundings or gathering information about certain ingredients in products on a store shelf. The research we conduct from this project ensures that all people can perceive, understand, and navigate the world equally and with assistive technology when needed. 
+
+**Objective**
+
+The dataset we will be using is the Kaggle Text Extraction from Images Dataset. This dataset provides images that are effective examples of recognizable text in images in order to predict the efficiency of the model itself. The examples in the model dataset help provide an effective manner of predicting the error rate regarding the correctness of the text that is extracted from the image. The dataset consisted of 25,000 images that included 1 million annotations. However, for the purpose of this project, the data was narrowed down to 2,000 data points that were evaluated on a smaller scale. Our proposed method for building a product is using a Neural Network to identify text from images using Natural Language Processing. In this project, the concept of OCR was put into practice in order to digitize the physical character aspects that are able to be extracted from the images themselves. 
+
+**Audience**
+
+The prospective audience for this machine learning project are those who suffer from a vision impairment or have diagnosed blindness. The project would target those who could use images as a way of navigating the physical work through the perception of a digitized image. Those who would benefit from this project would most likely use the text extraction tool with a text-to-voice tool that allows the text to be heard and perceived accordingly. This project may also be beneficial for those who would rather read the ALT text interpretations of images or have trouble reading the text on a smaller scale rather than in a format that brings attention to the extracted text.  The purpose of the project is to create a machine learning model that allows users who suffer from a vision impairment to be able to efficiently read the text that comes from the images. This method will work closely with other assistive tools to efficiently provide a perspective of the digital world to those who need to use images to perceive their environment. This project will make it more efficient for those who have visual impairments to be able to navigate digital environments using a voice to text system that includes pictures. Text from images can be used in a number of ways to create more inclusive environments for those who can use this tool to the advantage of recognition and predictive capabilities. It can also be used as a tool to those with learning or cognitive disabilities and can provide adequate assistance to those who are recovering from a temporary disability. 
 
  
 ## Dataset
 
-TextOCR requires models to perform text-recognition on arbitrary shaped scene-text present on natural images. 
-This OCR provides ~1M high quality word annotations on TextVQA images allowing application of end-to-end reasoning on downstream tasks such as visual question answering or image captioning.
+**Data Description**
 
-This data is available with a *CC0: Public Domain license*. 
+The dataset we used was from Kaggle, and consisted of images and word annotations for people to implement optical character recognition models with. The dataset was very large, coming in at 7 gigabytes, with over 25,000 photos. The data came with training and test images, as well as an annotations dataset to train the model with, too. These were in the form of JSON and Parquet-type files. The data was collated by Kaggle user: Rob Mulla (Owner) and the dataset is available with a CC0: Public Domain License. 
+
+**Processing**
+
+Because of the size of the data, we had to downsize it to make it easier to work with. We downsized the annotations data to 1000 samples, compared to the original million+. Additionally, we merged two datasets, image_df and annot_df, on the basis of the image_id column. 
+
+<img width="500" alt="Screen Shot 2023-05-01 at 5 45 25 PM" src="https://user-images.githubusercontent.com/51467244/235544429-1a35bf93-0177-48df-b027-9dea99d645a2.png">
 
 ```
 # Importing Libraries
@@ -32,7 +42,7 @@ from PIL import Image
 plt.style.use('ggplot')
 ```
 
-## Plotting Example Images
+**Plotting Example Images**
 
 ```
 # Plotting example images
@@ -64,23 +74,18 @@ annot.query('image_id == @image_id')
 
 
 
-## Extracting Text from Images using Keras OCR
+## Methodologies
 
-**Keras-ocr** is an OCR library built on top of the popular deep learning framework, Keras. 
-It utilizes the **CRAFT: Character-Region Awareness For Text detection algorithm** with a **VGG model** as the backbone.  
-- It uses multiple machine algorithms for pattern recognition to determine the layout and presence of text image files
-- It is trained to recognize characters, shapes, and numbers in order to recognize text in images 
-- This is done using a combination of hardware, such as optical scanners and software capable of image processing
-- It is trained on re-purposed data from scanned documents, camera images, and image-only pdfs
+**Extracting Text from Images using Keras OCR**
+
+We used Keras-OCR, a deep-learning tool, to analyze the text in the images. OCR’s in general are used to identify and digitize characters in images. Generally, Keras-OCR works in parts, including: Image Processing, Character Segmentation and Recognition, and Text Recognition. The Image Processing is relatively straight-forward, in that Keras-OCR ingests images from the dataset and processes it to make text more visible and blur any background to further enhance it. Character segmentation is achieved by splitting each individual character in a string to further analyze it. Keras-OCR does this by implementing contour detection, which is a technique that detects the borders of objects by finding differences in shading, and localizing them for analysis. 
+
+After segmenting the characters, Keras-OCR can begin Recognition by using deep learning models, such as convolutional neural networks (CNNs) and recurrent neural networks (RNNs) to achieve this. These models in Keras-OCR are pre-trained on large datasets of labeled images to identify each character with relative accuracy. Lastly, Keras-OCR began Text Recognition, which entails stringing the characters that have been split and recognized, into words and sentences. This is achieved by using Natural Language Processing models. From there, Keras-OCR also has a function in which it visualizes the words, which makes it simple to analyze the accuracy of the models.
+
 
 <img width="500" alt="Screen Shot 2023-04-28 at 2 06 17 PM" src="https://user-images.githubusercontent.com/51467244/235232311-6bdf6d2e-2870-4de7-98f6-f9757eaa7703.png">
 
 *VGG illustration - U Toronto's Prof Davi Frossard*
-
-Sources:
-- https://pypi.org/project/keras-ocr/
-- https://wandb.ai/andrea0/optical-char/reports/Optical-Character-Recognition-Then-and-Now--VmlldzoyMDY0Mzc0
-
 
 ```
 # Installing Keras OCR (supports Python >= 3.6 and TensorFlow >= 2.0.0)
@@ -156,10 +161,13 @@ for text, box in predicted_image:
 
 
 
+**Generating Metrics -** ***How well does our model perform?***
 
-## Generating Metrics - How well does our model perform?
+To evaluate the model, we used two corresponding metrics: Word Error Rate (WER) and Character Error Rate (CER). These two models identify the performance of the OCR system that is used to extract the text from the images and together they represent the system’s ability to correctly recognize the text. WER focuses on the amount of words the system incorrectly recognizes and this metric is used to determine the faults within each extraction regarding the credibility of the text. It is calculated using the formula WER = (S + D + I) / N. In this formula, S is the number of word substitutions the system makes that are incorrectly matched with the word that is presented in the image. D is the number of word deletions the system makes within an image text extraction and I is the number of word insertions or additions the system makes when the image does not contain those specific words. The term N is the total number of correct words in the image that should have been extracted by the system if there were no previous faults. 
 
-Initially planned to use accuracy to determine model performance, but opted to use Word Error Rate (WER) and Character Error Rate (CER) instead. This is a better objective metric because it integrates potential substitution, deletion, and insertion errors. This offers us a benchmark to iterate our model to steadily improve performance metrics. 
+CER is the metric that measures the percentage of characters that are not or incorrectly recognized by the OCR system. In this context, characters are known as any additional aspects of a word that are necessary to its readability. Examples can be apostrophes or dashes. CER is calculated through the following formula, CER = (S + D + I) / N, which is similar to that of word error rate. In this formula, S is the number of character substitutions meaning any character that was incorrectly recognized by the OCR system. D is the number of character deletions and I is the number of character insertions or additions. Similarly to the WER formula, N is the total number of characters that should be correctly recognized by the OCR system if it ran efficiently.
+
+For the specific use of our project, we used these two metrics to determine if the problem we were trying to solve was credible in the context of efficiency and correctness. We instituted the parameters of these metrics into the sample sizing of our data set and correlated the differences depending on the error rates of the sample.  We used the WER and CER metrics to quantify the model's accuracy in a context that was able to be used to predict the accuracy of this model in the future, and find places where suggestions can be made on what can be fixed. The Keras-OCR library provides functions that calculate these metrics within the data analyzation method of choice, which in our case was Jupyter Notebook and the Pandas library. Based on the predicted outputs and the actual extraction texts, we were able to understand how the inaccuracy of this model may affect its ability to create feasible environments that are meant to aid in accessibility efforts.  These metrics usually handle the correlation of the predicted and ground truth or actual text from the image and compute the error rates correctly, which can be used to modify the parameters of the extraction efforts itself. 
 
 ```
 # Importing jiwer 
@@ -195,8 +203,6 @@ print(error_cer/25)
 
 <img width="600" alt="Screen Shot 2023-04-28 at 1 44 09 PM" src="https://user-images.githubusercontent.com/51467244/235228360-afb00687-6a3f-4fad-8a19-aeae00b29df1.png">
 
-Source: https://towardsdatascience.com/evaluating-ocr-output-quality-with-character-error-rate-cer-and-word-error-rate-wer-853175297510
-
 
 ## Reflections & Next Steps
 
@@ -221,6 +227,18 @@ Source: https://towardsdatascience.com/evaluating-ocr-output-quality-with-charac
 - Conduct research on individuals with visual impairments to identify user needs and curate a dataset that would be more representative of actual usage cases
 
 
+## References
 
+- Mulla, R. (2022, July). TextOCR - Text Extraction from Images Dataset, Version 1. Retrieved March 21, 2023 from https://www.kaggle.com/datasets/robikscube/textocr-text-extraction-from-images-dataset. 
+
+- Ch’ng, C, et al. (2022, April). Total-Text-Dataset, Version 23. Retrieved March 21, 2023 from https://github.com/cs-chan/Total-Text-Dataset.
+
+- Davydova, O. (2017, September 26). 7 types of Artificial Neural Networks for Natural Language Processing. Medium. https://medium.com/@datamonsters/artificial-neural-networks-for-natural-language-processing-part-1-64ca9ebfa3b2. 
+
+- Leung, K. (2021, June 24). Evaluate OCR Output Quality with Character Error Rate (CER) and Word Error Rate (WER). Towards Data Science. https://towardsdatascience.com/evaluating-ocr-output-quality-with-character-error-rate-cer-and-word-error-rate-wer-853175297510.
+
+- Vaessen, N. (2023, March 28). jiwer 3.0.1. pypi. Retrieved May 1, 2023, from https://pypi.org/project/jiwer/ 
+
+- Parker, A. (2023, February 3). Optical Character Recognition: Then and Now. Weights & Biases. https://wandb.ai/andrea0/optical-char/reports/Optical-Character-Recognition-Then-and-Now--VmlldzoyMDY0Mzc0. 
 
 
