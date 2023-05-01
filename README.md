@@ -174,13 +174,13 @@ Source: https://towardsdatascience.com/evaluating-ocr-output-quality-with-charac
 
 ## Reflections & Next Steps
 
-What we learned:
+**What we learned:**
 - How to work with large datasets: download and sample
 - How to implement OCR models, particularly Keras-OCR
 - How to compute OCR specific metrics (WER and CER)
 - How to troubleshoot problems occurring from large datasets: sampling down and scaling up
 
-Challenges Faced:
+**Challenges Faced:**
 
 - Working with a large dataset -> how to sample down and slowly increase to improve test results
 - How to coordinate a coding project between team members. We initially tried using Google Colab, but found it difficult to use for our goals. 
@@ -188,7 +188,7 @@ Challenges Faced:
 - Evaluating models: CER and WER instead of accuracy
   - Had to iterate these formulas calculations through the Test annotations and the Keras OCR results (format difficulties)
 
-Next Steps:
+**Next Steps:**
 
 - Integrate a text-to-speech dataset to complete the project
 - Improve WER and CER of models by increasing the number of training images used 
