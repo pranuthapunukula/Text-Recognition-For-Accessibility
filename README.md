@@ -215,6 +215,9 @@ print(error_cer/25)
 ## Reflections & Next Steps
 
 **What we learned:**
+
+In this project, we learned how to implement OCR models, focusing on Keras-OCR, as well as compute metrics specific to OCR, such as the Word Error Rate and Character Error Rate as created by Keras-OCR. Our model is currently performing with a Mean Word Error Rate of 67.42% and a Mean Character Error Rate of 27.36%. We also learned how to troubleshoot problems occurring from large datasets, specifically obtained through Kaggle downloads. We learned to sample down on the data, as well as scale up - depending on the circumstances and the power capabilities of our machines.
+
 - How to work with large datasets: download and sample
 - How to implement OCR models, particularly Keras-OCR
 - How to compute OCR specific metrics (WER and CER)
