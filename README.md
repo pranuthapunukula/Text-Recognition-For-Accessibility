@@ -87,6 +87,8 @@ After segmenting the characters, Keras-OCR can begin Recognition by using deep l
 
 *VGG illustration - U Toronto's Prof Davi Frossard*
 
+The core of the Keras-OCR package has two parts: a core detector and a recognizer. These provide wrappers for the underlying models. However, they also offer a pipeline you can use to run on images. Within the pipeline, you have options to adjust the parameters for the detector, recognizer, scale, and max size. When running the pipeline, it provides the user with pre-trained weights that are used to make the predictions. Using the pipeline recognize command, we can run through a list of images and ask it to make predictions. The table results Keras OCR offers includes the predicted word and its bounding box. By wrapping the results into a dataframe, we were able to format the results in a way that could be plotted. Keras OCR automatically has a built in annotation drawing tool, so we were able to visualize the predicted results directly on the images. 
+
 ```
 # Installing Keras OCR (supports Python >= 3.6 and TensorFlow >= 2.0.0)
 
@@ -169,6 +171,12 @@ CER is the metric that measures the percentage of characters that are not or inc
 
 For the specific use of our project, we used these two metrics to determine if the problem we were trying to solve was credible in the context of efficiency and correctness. We instituted the parameters of these metrics into the sample sizing of our data set and correlated the differences depending on the error rates of the sample.  We used the WER and CER metrics to quantify the model's accuracy in a context that was able to be used to predict the accuracy of this model in the future, and find places where suggestions can be made on what can be fixed. The Keras-OCR library provides functions that calculate these metrics within the data analyzation method of choice, which in our case was Jupyter Notebook and the Pandas library. Based on the predicted outputs and the actual extraction texts, we were able to understand how the inaccuracy of this model may affect its ability to create feasible environments that are meant to aid in accessibility efforts.  These metrics usually handle the correlation of the predicted and ground truth or actual text from the image and compute the error rates correctly, which can be used to modify the parameters of the extraction efforts itself. 
 
+<img width="600" alt="Screen Shot 2023-04-28 at 1 44 09 PM" src="https://user-images.githubusercontent.com/51467244/235228360-afb00687-6a3f-4fad-8a19-aeae00b29df1.png">
+
+## Conclusion
+
+To determine the WER and CER of our model, we iterated through the Keras OCR pipeline results and the annotated images dataset to compare the actual and predicted results. We ended up with a Mean Word Error Rate of 67.42% and a Mean Character Error Rate of 27.36%. The Mean Word Error Rate indicates that almost 7 out of 10 words were wrongly transcribed. The Mean Character Error Rate indicates that nearly every third character was wrongly transcribed. Though these results imply poor OCR output performance, we hypothesize that this is due to us sampling a small portion of the image dataset.
+
 ```
 # Importing jiwer 
 
@@ -201,7 +209,7 @@ print(error_cer/25)
 
 ```
 
-<img width="600" alt="Screen Shot 2023-04-28 at 1 44 09 PM" src="https://user-images.githubusercontent.com/51467244/235228360-afb00687-6a3f-4fad-8a19-aeae00b29df1.png">
+<img width="719" alt="Screen Shot 2023-05-01 at 7 56 04 PM" src="https://user-images.githubusercontent.com/51467244/235556970-3db0dbc5-1803-495c-8919-3fe25c5e5e6a.png">
 
 
 ## Reflections & Next Steps
@@ -214,6 +222,8 @@ print(error_cer/25)
 
 **Challenges Faced:**
 
+Along the way, we were presented with several challenges, some technical and some due to working with new materials. Our first issue came from the dataset on Kaggle being too large, creating an issue with downloading. Another problem occurred with regard to Google Colab, as we could not edit the file at the same time and kept deleting each other’s progress. To resolve this, we decided to have one person use Jupyter Notebook and work on it together through Zoom Meetings. Additionally, we worked with a module, Keras-OCR, that was new to all of us, and used CER and WER to evaluate the error rates instead of using accuracy, as we did in class. We iterated these formulas calculations through the Test annotations and the Keras OCR results, facing struggles with formatting.
+
 - Working with a large dataset -> how to sample down and slowly increase to improve test results
 - How to coordinate a coding project between team members. We initially tried using Google Colab, but found it difficult to use for our goals. 
 - Worked with a new module (Keras-OCR)
@@ -221,6 +231,8 @@ print(error_cer/25)
   - Had to iterate these formulas calculations through the Test annotations and the Keras OCR results (format difficulties)
 
 **Next Steps:**
+
+Moving further in this project, we will integrate a text-to speech dataset to further assist people with visual impairments and to ensure our findings are helpful. We will also work to improve the WER and CER of models, by lowering both error rates to improve the OCR performance. However, those metrics do not accurately reflect the overall quality of the OCR output, especially factors such as grammar or context of the text. Thus, we will continue to evaluate the OCR performance using human evaluations. Additionally, we want to evaluate the semantics of the word detection process. We will also work further to collect data on individuals with visual impairments to discover or create a more useful dataset for the task, as the one we were using in this project consisted of simple images and created more generic results.
 
 - Integrate a text-to-speech dataset to complete the project
 - Improve WER and CER of models by increasing the number of training images used 
